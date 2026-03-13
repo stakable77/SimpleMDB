@@ -1,0 +1,120 @@
+{
+  "info": {
+    "name": "SimpleMDB API Test",
+    "_postman_id": "simplemdb-api-test-collection",
+    "description": "Postman collection with CRUD+L requests for the SimpleMDB Movies API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Movie (POST)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Example Movie\",\n  \"director\": \"Example Director\",\n  \"year\": 2024,\n  \"genre\": \"Drama\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/movies",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "movies"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Movie By ID (READ)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/movies/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "movies",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update Movie (PUT)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 1,\n  \"title\": \"Updated Movie\",\n  \"director\": \"Updated Director\",\n  \"year\": 2025,\n  \"genre\": \"Action\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/movies/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "movies",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Delete Movie (DELETE)",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{baseUrl}}/api/movies/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "movies",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "List Movies (LIST)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/movies",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "movies"
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    }
+  ]
+}

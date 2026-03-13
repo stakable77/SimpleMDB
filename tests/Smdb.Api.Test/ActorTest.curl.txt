@@ -1,0 +1,42 @@
+# SimpleMDB API Actors CRUD+L Test Commands
+# File: SimpleMDB_API_Test_cURL_Actors.txt
+# Base URL
+BASE_URL="http://localhost:8080/api/v1/actors"
+
+##################################################
+# CREATE - Agregar un actor
+##################################################
+curl -X POST $BASE_URL \
+     -H "Content-Type: application/json" \
+     -d '{
+           "name": "Leonardo DiCaprio",
+           "birthYear": 1974,
+           "nationality": "American"
+         }'
+
+##################################################
+# READ - Obtener un actor por ID
+##################################################
+ACTOR_ID=1
+curl -X GET "$BASE_URL/$ACTOR_ID"
+
+##################################################
+# UPDATE - Actualizar un actor existente
+##################################################
+curl -X PUT "$BASE_URL/$ACTOR_ID" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "name": "Leonardo DiCaprio Updated",
+           "birthYear": 1974,
+           "nationality": "American"
+         }'
+
+##################################################
+# DELETE - Eliminar un actor
+##################################################
+curl -X DELETE "$BASE_URL/$ACTOR_ID"
+
+##################################################
+# LIST - Obtener todos los actores
+##################################################
+curl -X GET $BASE_URL

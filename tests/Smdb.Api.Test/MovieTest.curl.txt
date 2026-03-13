@@ -1,0 +1,44 @@
+# SimpleMDB API Movies CRUD+L Test Commands
+# File: SimpleMDB_API_Test_cURL_Movies.txt
+# Base URL
+BASE_URL="http://localhost:8080/api/v1/movies"
+
+##################################################
+# CREATE - Agregar una película
+##################################################
+curl -X POST $BASE_URL \
+     -H "Content-Type: application/json" \
+     -d '{
+           "title": "Inception",
+           "director": "Christopher Nolan",
+           "year": 2010,
+           "genre": "Sci-Fi"
+         }'
+
+##################################################
+# READ - Obtener una película por ID
+##################################################
+MOVIE_ID=1
+curl -X GET "$BASE_URL/$MOVIE_ID"
+
+##################################################
+# UPDATE - Actualizar una película existente
+##################################################
+curl -X PUT "$BASE_URL/$MOVIE_ID" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "title": "Inception Updated",
+           "director": "Christopher Nolan",
+           "year": 2010,
+           "genre": "Sci-Fi/Thriller"
+         }'
+
+##################################################
+# DELETE - Eliminar una película
+##################################################
+curl -X DELETE "$BASE_URL/$MOVIE_ID"
+
+##################################################
+# LIST - Obtener todas las películas
+##################################################
+curl -X GET $BASE_URL

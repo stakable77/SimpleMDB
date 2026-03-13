@@ -1,0 +1,40 @@
+# SimpleMDB API Actors-Movies CRUD+L Test Commands
+# File: SimpleMDB_API_Test_cURL_Actors-Movies.txt
+# Base URL
+BASE_URL="http://localhost:8080/api/v1/actors-movies"
+
+##################################################
+# CREATE - Agregar relación actor-movie
+##################################################
+curl -X POST $BASE_URL \
+     -H "Content-Type: application/json" \
+     -d '{
+           "actorId": 1,
+           "movieId": 1
+         }'
+
+##################################################
+# READ - Obtener relación actor-movie por ID
+##################################################
+RELATION_ID=1
+curl -X GET "$BASE_URL/$RELATION_ID"
+
+##################################################
+# UPDATE - Actualizar relación actor-movie
+##################################################
+curl -X PUT "$BASE_URL/$RELATION_ID" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "actorId": 1,
+           "movieId": 2
+         }'
+
+##################################################
+# DELETE - Eliminar relación actor-movie
+##################################################
+curl -X DELETE "$BASE_URL/$RELATION_ID"
+
+##################################################
+# LIST - Obtener todas las relaciones actor-movie
+##################################################
+curl -X GET $BASE_URL
