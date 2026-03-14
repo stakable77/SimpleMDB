@@ -3,14 +3,18 @@ namespace Smdb.Api;
 using Shared.Http;
 using Smdb.Api.Movies;
 using Smdb.Api.Users;
+using Smdb.Api.Actors;
 using Smdb.Core.Movies;
 using Smdb.Core.Users;
+using Smdb.Core.Actors;
 using Smdb.Core.Db;
 
 
 
 public class App : HttpServer
 {
+	private object actorRouter;
+
 	public override void Init()
 	{
 
@@ -28,6 +32,9 @@ public class App : HttpServer
 		var userRouter = new UsersRouter(userCtrl);
 
 
+
+
+
 		var apiRouter = new HttpRouter();
 
 
@@ -39,8 +46,10 @@ public class App : HttpServer
 		router.Use(HttpUtils.ParseRequestQueryString);
 		router.UseParametrizedRouteMatching();
 		router.UseRouter("/api/v1", apiRouter);
+		
 		apiRouter.UseRouter("/movies", movieRouter);
 		apiRouter.UseRouter("/users", userRouter);
+		apiRouter.UseRouter("/actors", actorRouter);
 
 		// GET /api/v1/movies/
 		// POST /api/v1/movies/

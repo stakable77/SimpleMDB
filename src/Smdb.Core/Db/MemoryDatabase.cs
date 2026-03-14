@@ -1,11 +1,14 @@
 namespace Smdb.Core.Db;
 
+using Smdb.Core.Actors;
 using Smdb.Core.Movies;
 using Smdb.Core.Users;
 public class MemoryDatabase
 {
 	public List<Movie> Movies { get; }
 	public List<UserModel> Users { get; } = new();
+	public List<ActorModel> Actors { get; } = new();
+
 
 	private int nextMovieId;
 	public MemoryDatabase()
