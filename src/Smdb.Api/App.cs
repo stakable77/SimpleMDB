@@ -4,9 +4,11 @@ using Shared.Http;
 using Smdb.Api.Movies;
 using Smdb.Api.Users;
 using Smdb.Api.Actors;
+using Smdb.Api.ActorsMovies;
 using Smdb.Core.Movies;
 using Smdb.Core.Users;
 using Smdb.Core.Actors;
+using Smdb.Core.ActorsMovies;
 using Smdb.Core.Db;
 
 
@@ -32,7 +34,11 @@ public class App : HttpServer
 		var userRouter = new UsersRouter(userCtrl);
 
 
-
+		// ACTORS-MOVIES
+		var amRepo = new MemoryActorMovieRepository(db);
+		var amServ = new DefaultActorMovieService(amRepo);
+		var amCtrl = new ActorsMoviesController(amServ);
+		var amRouter = new ActorsMoviesRouter(amCtrl);
 
 
 		var apiRouter = new HttpRouter();
@@ -46,10 +52,11 @@ public class App : HttpServer
 		router.Use(HttpUtils.ParseRequestQueryString);
 		router.UseParametrizedRouteMatching();
 		router.UseRouter("/api/v1", apiRouter);
-		
+
 		apiRouter.UseRouter("/movies", movieRouter);
 		apiRouter.UseRouter("/users", userRouter);
 		apiRouter.UseRouter("/actors", actorRouter);
+		apiRouter.UseRouter("/actors-movies", amRouter);
 
 		// GET /api/v1/movies/
 		// POST /api/v1/movies/

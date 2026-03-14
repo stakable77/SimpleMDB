@@ -3,11 +3,15 @@ namespace Smdb.Core.Db;
 using Smdb.Core.Actors;
 using Smdb.Core.Movies;
 using Smdb.Core.Users;
+using Smdb.Core.ActorsMovies; 
 public class MemoryDatabase
 {
 	public List<Movie> Movies { get; }
 	public List<UserModel> Users { get; } = new();
 	public List<ActorModel> Actors { get; } = new();
+
+	public List<ActorMovieModel> ActorMovies { get; } = new();
+
 
 
 	private int nextMovieId;
