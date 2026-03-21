@@ -1,5 +1,12 @@
-Task<PagedResult<Actor>> ReadActors(int page, int size);
-Task<Actor> CreateActor(Actor actor);
-Task<Actor?> ReadActor(int id);
-Task<Actor?> UpdateActor(int id, Actor actor);
-Task<bool> DeleteActor(int id);
+namespace Smdb.Core.Actors;
+
+using Shared.Http;
+
+public interface IActorService
+{
+    Result<PagedResult<ActorModel>> List(int page, int size);
+    Result<ActorModel> Get(int id);
+    Result<ActorModel> Create(ActorModel actor);
+    Result<ActorModel> Update(int id, ActorModel actor);
+    Result<bool> Delete(int id);
+}

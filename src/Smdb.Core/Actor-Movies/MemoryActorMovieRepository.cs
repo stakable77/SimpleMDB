@@ -2,33 +2,32 @@ using Smdb.Core.Db;
 
 namespace Smdb.Core.ActorsMovies;
 
-public class MemoryActorMovieRepository : ActorMovieRepository
+public class MemoryActorMovieRepository : IActorMovieRepository
 {
-    private readonly MemoryDatabase db;
+    private readonly MemoryDatabase _db;
 
     public MemoryActorMovieRepository(MemoryDatabase db)
     {
-        this.db = db;
+        _db = db;
     }
 
-    public override List<ActorMovieModel> GetAll()
-        => db.ActorMovies;
+    public List<ActorMovieModel> GetAll() => _db.ActorMovies;
 
-    public override ActorMovieModel Add(ActorMovieModel model)
+    public ActorMovieModel Add(ActorMovieModel model)
     {
-        model.Id = db.ActorMovies.Count + 1;
-        db.ActorMovies.Add(model);
+        model.Id = _db.ActorMovies.Count == 0 ? 1 : _db.ActorMovies.Max(x => x.Id) + 1;
+        _db.ActorMovies.Add(model);
         return model;
     }
 
-    public override ActorMovieModel? GetById(int id)
-        => db.ActorMovies.FirstOrDefault(x => x.Id == id);
+    public ActorMovieModel? GetById(int id)
+        => _db.ActorMovies.FirstOrDefault(x => x.Id == id);
 
-    public override bool Delete(int id)
+    public bool Delete(int id)
     {
         var item = GetById(id);
         if (item == null) return false;
-        db.ActorMovies.Remove(item);
+        _db.ActorMovies.Remove(item);
         return true;
     }
 }

@@ -11,7 +11,7 @@ Accept: application/json
 ############################################
 ### READ MOVIE BY ID
 ############################################
-GET {{baseUrl}}/api/v1/movies/1
+GET {{baseUrl}}/api/v1/movies/34
 Accept: application/json
 
 ###
@@ -19,12 +19,12 @@ Accept: application/json
 ############################################
 ### CREATE MOVIE
 ############################################
-POST {{baseUrl}}/api/v1/movies
+POST {{baseUrl}}/api/v2/movies
 Content-Type: application/json
 
 {
   "id": -1,
-  "title": "Inception",
+  "tle": "Inception",
   "year": 2010,
   "description": "A skilled thief who enters dreams to steal secrets."
 }
@@ -34,7 +34,7 @@ Content-Type: application/json
 ############################################
 ### UPDATE MOVIE
 ############################################
-PUT {{baseUrl}}/api/v1/movies/1
+PUT {{baseUrl}}/api/v1/movies/34
 Content-Type: application/json
 
 {
@@ -48,7 +48,7 @@ Content-Type: application/json
 ############################################
 ### DELETE MOVIE
 ############################################
-DELETE {{baseUrl}}/api/v1/movies/1
+DELETE {{baseUrl}}/api/v1/movies/34
 Accept: application/json
 
 ###

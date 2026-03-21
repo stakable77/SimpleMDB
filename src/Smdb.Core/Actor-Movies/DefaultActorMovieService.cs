@@ -1,23 +1,40 @@
 namespace Smdb.Core.ActorsMovies;
 
+using System.Net;
+using Shared.Http;
+
 public class DefaultActorMovieService
 {
-    private readonly MemoryActorMovieRepository repo;
+    private readonly IActorMovieRepository _repo;
 
-    public DefaultActorMovieService(MemoryActorMovieRepository repo)
+    public DefaultActorMovieService(IActorMovieRepository repo)
     {
-        this.repo = repo;
+        _repo = repo;
     }
 
-    public Task<List<ActorMovieModel>> ReadAll()
-        => Task.FromResult(repo.GetAll());
+    public Result<List<ActorMovieModel>> GetAll()
+        => new Result<List<ActorMovieModel>>(_repo.GetAll());
 
-    public Task<ActorMovieModel> Create(ActorMovieModel model)
-        => Task.FromResult(repo.Add(model));
+    public Result<ActorMovieModel> Create(ActorMovieModel model)
+        => new Result<ActorMovieModel>(_repo.Add(model), (int)HttpStatusCode.Created);
 
-    public Task<ActorMovieModel?> Read(int id)
-        => Task.FromResult(repo.GetById(id));
+    public Result<ActorMovieModel> Get(int id)
+    {
+        var item = _repo.GetById(id);
+        if (item is null)
+            return new Result<ActorMovieModel>(
+                new Exception($"ActorMovie with id {id} not found."),
+                (int)HttpStatusCode.NotFound);
+        return new Result<ActorMovieModel>(item);
+    }
 
-    public Task<bool> Delete(int id)
-        => Task.FromResult(repo.Delete(id));
+    public Result<bool> Delete(int id)
+    {
+        var deleted = _repo.Delete(id);
+        if (!deleted)
+            return new Result<bool>(
+                new Exception($"ActorMovie with id {id} not found."),
+                (int)HttpStatusCode.NotFound);
+        return new Result<bool>(true);
+    }
 }

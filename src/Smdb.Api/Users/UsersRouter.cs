@@ -1,23 +1,17 @@
-using Shared.Http;
-using Smdb.Core.Users;
-
 namespace Smdb.Api.Users;
+
+using Shared.Http;
 
 public class UsersRouter : HttpRouter
 {
-    private readonly UsersController _ctrl;
-
-    public UsersRouter(UsersController ctrl)
+    public UsersRouter(UsersController usersController)
     {
-        _ctrl = ctrl;
-    }
+        UseParametrizedRouteMatching();
 
-    public void MapRoutes(IEndpointRouteBuilder app)
-    {
-        app.MapGet("/", (int page, int size) => _ctrl.List(page, size));
-        app.MapGet("/{id}", (int id) => _ctrl.Read(id));
-        app.MapPost("/", (UserModel user) => _ctrl.Create(user));
-        app.MapPut("/{id}", (int id, UserModel user) => _ctrl.Update(id, user));
-        app.MapDelete("/{id}", (int id) => _ctrl.Delete(id));
+        MapGet("/", usersController.ReadUsers);
+        MapPost("/", HttpUtils.ReadRequestBodyAsText, usersController.CreateUser);
+        MapGet("/:id", usersController.ReadUser);
+        MapPut("/:id", HttpUtils.ReadRequestBodyAsText, usersController.UpdateUser);
+        MapDelete("/:id", usersController.DeleteUser);
     }
 }

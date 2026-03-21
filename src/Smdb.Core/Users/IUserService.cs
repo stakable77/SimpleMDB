@@ -1,10 +1,12 @@
 namespace Smdb.Core.Users;
 
+using Shared.Http;
+
 public interface IUserService
 {
-    IEnumerable<UserModel> List(int page, int size);
-    UserModel? Get(int id);
-    UserModel Create(UserModel user);
-    UserModel? Update(int id, UserModel user);
-    bool Delete(int id);
+    Result<PagedResult<UserModel>> List(int page, int size);
+    Result<UserModel> Get(int id);
+    Result<UserModel> Create(UserModel user);
+    Result<UserModel> Update(int id, UserModel user);
+    Result<bool> Delete(int id);
 }

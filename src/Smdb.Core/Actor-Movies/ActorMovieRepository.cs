@@ -1,6 +1,6 @@
 namespace Smdb.Core.ActorsMovies;
 
-public class ActorMovieRepository
+public class ActorMovieRepository : IActorMovieRepository
 {
     protected readonly List<ActorMovieModel> items = new();
 

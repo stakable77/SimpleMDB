@@ -9,72 +9,72 @@ using Smdb.Core.Actors;
 
 public class ActorsController
 {
-    private readonly DefaultActorService actorService;
+    private readonly DefaultActorService _actorService;
 
     public ActorsController(DefaultActorService actorService)
     {
-        this.actorService = actorService;
+        _actorService = actorService;
     }
 
-    // GET /actors?page=1&size=10
+    // GET /api/v1/actors?page=1&size=10
     public async Task ReadActors(HttpListenerRequest req, HttpListenerResponse res,
-    Hashtable props, Func<Task> next)
+        Hashtable props, Func<Task> next)
     {
         int page = int.TryParse(req.QueryString["page"], out int p) ? p : 1;
         int size = int.TryParse(req.QueryString["size"], out int s) ? s : 10;
 
-        var result = await actorService.ReadActors(page, size);
+        var result = _actorService.List(page, size);
         await JsonUtils.SendPagedResultResponse(req, res, props, result, page, size);
         await next();
     }
 
-    // POST /actors
+    // POST /api/v1/actors
     public async Task CreateActor(HttpListenerRequest req,
-    HttpListenerResponse res, Hashtable props, Func<Task> next)
+        HttpListenerResponse res, Hashtable props, Func<Task> next)
     {
         var text = (string)props["req.text"]!;
         var actor = JsonSerializer.Deserialize<ActorModel>(text, JsonSerializerOptions.Web);
 
-        var result = await actorService.CreateActor(actor!);
+        var result = _actorService.Create(actor!);
         await JsonUtils.SendResultResponse(req, res, props, result);
         await next();
     }
 
-    // GET /actors/:id
+    // GET /api/v1/actors/:id
     public async Task ReadActor(HttpListenerRequest req, HttpListenerResponse res,
-    Hashtable props, Func<Task> next)
+        Hashtable props, Func<Task> next)
     {
         var uParams = (NameValueCollection)props["req.params"]!;
-        int id = int.TryParse(uParams["id"]!, out int i) ? i : -1;
+        int id = int.TryParse(uParams["id"], out int i) ? i : -1;
 
-        var result = await actorService.ReadActor(id);
+        var result = _actorService.Get(id);
         await JsonUtils.SendResultResponse(req, res, props, result);
         await next();
     }
 
-    // PUT /actors/:id
+    // PUT /api/v1/actors/:id
     public async Task UpdateActor(HttpListenerRequest req,
-    HttpListenerResponse res, Hashtable props, Func<Task> next)
+        HttpListenerResponse res, Hashtable props, Func<Task> next)
     {
         var uParams = (NameValueCollection)props["req.params"]!;
-        int id = int.TryParse(uParams["id"]!, out int i) ? i : -1;
+        int id = int.TryParse(uParams["id"], out int i) ? i : -1;
 
         var text = (string)props["req.text"]!;
         var actor = JsonSerializer.Deserialize<ActorModel>(text, JsonSerializerOptions.Web);
 
-        var result = await actorService.UpdateActor(id, actor!);
+        var result = _actorService.Update(id, actor!);
         await JsonUtils.SendResultResponse(req, res, props, result);
         await next();
     }
 
-    // DELETE /actors/:id
+    // DELETE /api/v1/actors/:id
     public async Task DeleteActor(HttpListenerRequest req,
-    HttpListenerResponse res, Hashtable props, Func<Task> next)
+        HttpListenerResponse res, Hashtable props, Func<Task> next)
     {
         var uParams = (NameValueCollection)props["req.params"]!;
-        int id = int.TryParse(uParams["id"]!, out int i) ? i : -1;
+        int id = int.TryParse(uParams["id"], out int i) ? i : -1;
 
-        var result = await actorService.DeleteActor(id);
+        var result = _actorService.Delete(id);
         await JsonUtils.SendResultResponse(req, res, props, result);
         await next();
     }

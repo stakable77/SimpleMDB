@@ -14,12 +14,14 @@ public class MemoryActorRepository : IActorRepository
     public List<ActorModel> List(int page, int size)
         => _db.Actors.Skip((page - 1) * size).Take(size).ToList();
 
+    public int Count() => _db.Actors.Count;
+
     public ActorModel? Get(int id)
         => _db.Actors.FirstOrDefault(a => a.Id == id);
 
     public ActorModel Create(ActorModel actor)
     {
-        actor.Id = _db.Actors.Count + 1;
+        actor.Id = _db.Actors.Count == 0 ? 1 : _db.Actors.Max(a => a.Id) + 1;
         _db.Actors.Add(actor);
         return actor;
     }

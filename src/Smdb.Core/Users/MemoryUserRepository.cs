@@ -14,6 +14,8 @@ public class MemoryUserRepository : IUserRepository
     public IEnumerable<UserModel> List(int page, int size)
         => _db.Users.Skip((page - 1) * size).Take(size);
 
+    public int Count() => _db.Users.Count;
+
     public UserModel? GetById(int id)
         => _db.Users.FirstOrDefault(u => u.Id == id);
 
@@ -43,4 +45,3 @@ public class MemoryUserRepository : IUserRepository
         return true;
     }
 }
-
